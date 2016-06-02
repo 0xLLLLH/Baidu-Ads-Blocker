@@ -1,0 +1,19 @@
+body{
+    min-width: 300px;
+}
+.container{
+    padding: 0 5px;
+}
+.menu-block{
+    padding: 5px 0;
+    border-bottom: 1px solid #adadad;
+}
+.menu-block:last-of-type{
+    border-bottom: none;
+}
+.menu-block > .menu-item{
+    padding: 5px 0;
+}
+.menu-block > .menu-item:hover{
+    background-color: #eee;
+}
