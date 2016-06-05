@@ -2,9 +2,19 @@
  * Created by 0xLLLLH on 16-6-2.
  */
 
-$(blockAndRestore());
+var checkInterval = 250;
+var needBlock = true;
 
-$(document).on("click","a",blockAndRestore);
+$(document).on("DOMSubtreeModified",function () {
+    needBlock = true;
+});
+
+setInterval(function () {
+    if (needBlock) {
+        blockAndRestore();
+        needBlock = false;
+    }
+},checkInterval);
 
 function blockAndRestore() {
     console.log("blockAndRestore");
