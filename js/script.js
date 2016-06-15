@@ -1,43 +1,49 @@
 /**
- * Created by 0xLLLLH on 16-6-2.
+ * Description :一个用于屏蔽百度推广和广告的插件。
+ * @version 0.2
+ * 
+ * @author 0xLLLLH
+ *
  */
 
-var checkInterval = 250;
-var needBlock = true;
+var blocker = {
+    blockList: [
+        "#content_left>div:not(.c-container)",
+        "#content_right"
+    ],
 
-$(document).on("DOMSubtreeModified",function () {
-    needBlock = true;
-});
+    start: function () {
+        if (null==this.observer)
+            this.observer = new MutationObserver(this.block);
+        this.bindObserver();
+        this.block();
+    },
 
-setInterval(function () {
-    if (needBlock) {
-        blockAndRestore();
-        needBlock = false;
+    stop: function () {
+        if (null!=this.observer) {
+            this.observer.disconnect();
+        }
+    },
+
+    block: function () {
+        var ads = [];
+        var i;
+        for (i = 0;i < this.blockList.length; i++) {
+            ads = ads.concat(
+                Array.prototype.slice.call(document.querySelectorAll(this.blockList[i]))
+            );
+        }
+        for (i = 0;i < ads.length; i++) {
+            console.log(ads[i]);
+            ads[i].style.display = "none";
+        }
+    },
+
+    bindObserver: function () {
+        this.observer.observe(document.querySelector('#container'), {
+            'childList': true
+        });
     }
-},checkInterval);
+};
 
-function blockAndRestore() {
-    console.log("blockAndRestore");
-    block();
-    restore();
-}
-
-/*
- 以下是屏蔽项
- */
-
-function block() {
-    //屏蔽搜索结果页推广
-    $("#content_left").children("div:not(.c-container)").hide();
-
-    //屏蔽右侧推广
-    $("#content_right").find("td>div:contains('推广')").hide();
-}
-
-/*
- 以下是屏蔽后需要恢复的项
- */
-
-function restore() {
-    $(".hit_top_new").show();
-}
+blocker.start();
