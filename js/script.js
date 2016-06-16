@@ -9,12 +9,12 @@
 var blocker = {
     blockList: [
         "#content_left>div:not(.c-container)",
-        "#content_right"
+        "#content_right",
+        ".result-op.xpath-log",
+        ".rrecom-btn.rrecom-btn-hover"
     ],
 
     start: function () {
-        if (null==this.observer)
-            this.observer = new MutationObserver(this.block);
         this.bindObserver();
         this.block();
     },
@@ -40,8 +40,14 @@ var blocker = {
     },
 
     bindObserver: function () {
-        this.observer.observe(document.querySelector('#container'), {
-            'childList': true
+        var _this = this;
+        this.observer = new MutationObserver(function () {
+            _this.block();
+        });
+        this.observer.observe(document, {
+            childList: true,
+            subtree:true,
+            characterData:true
         });
     }
 };
