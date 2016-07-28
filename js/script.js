@@ -9,11 +9,21 @@
 var blocker = {
     blockList: [
         "#content_left>div:not(.c-container)",
-        "#content_right",
-        ".result-op.xpath-log",
-        ".rrecom-btn.rrecom-btn-hover"
+        ".adTopImg",
+        ".widget-sma",
+        ".wgt-ads",
+        ".ec-ad",
+        ".cms-slide",
+        ".left-top-ads"
     ],
-
+    optionBlockList: [{
+        optionName: "blockSidebar",
+        optionRule: [
+           "#content_right",
+            ".result-op.xpath-log",
+            ".rrecom-btn.rrecom-btn-hover"
+        ]
+    }],
     start: function () {
         this.bindObserver();
         this.block();
@@ -33,6 +43,17 @@ var blocker = {
                 Array.prototype.slice.call(document.querySelectorAll(this.blockList[i]))
             );
         }
+        for (i = 0; i < this.optionBlockList.length; i++) {
+            var option = this.optionBlockList[i];
+            if (localStorage.getItem(option.optionName) != "false") {
+                for (var j =0; j < option.optionRule.length; j++) {
+                    ads = ads.concat(
+                        Array.prototype.slice.call( document.querySelectorAll(option.optionRule[j]) )
+                    );
+                }
+            }
+        }
+        
         for (i = 0;i < ads.length; i++) {
             console.log(ads[i]);
             ads[i].style.display = "none";

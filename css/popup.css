@@ -1,19 +1,80 @@
 body{
-    min-width: 300px;
+    min-width: 250px;
+    font-family: "Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .container{
     padding: 0 5px;
 }
 .menu-block{
-    padding: 5px 0;
+	position: relative;
+    padding: 2.5px 0;
+    min-height: 20px;
     border-bottom: 1px solid #adadad;
 }
 .menu-block:last-of-type{
     border-bottom: none;
 }
-.menu-block > .menu-item{
-    padding: 5px 0;
+/*表单开关样式*/
+.ui-switch {
+    position: absolute;
+    font-size: 6.4px;
+    right: 3px;
+    top: 50%;
+    margin-top: -6.4px;
+    width: 30px;
+    height: 15px;
+    line-height: 12px;
 }
-.menu-block > .menu-item:hover{
-    background-color: #eee;
+.ui-switch input {
+	margin: 0;
+}
+.ui-switch input {
+    width: 30px;
+    position: absolute;
+    top: 0;left: 0;
+    z-index: 2;
+    border: 0;
+    background: 0 0;
+    outline: 0
+}
+.ui-switch input:before {
+    content: '';
+    width: 24px;
+    height: 12px;
+    border: 2px solid #dfdfdf;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    /* vertical-align: middle;*/
+    box-sizing: content-box;
+    border-color: #dfdfdf;
+    box-shadow: #dfdfdf 0 0 0 0 inset;
+    transition: border .4s,box-shadow .4s;
+    background-clip: content-box
+}
+
+.ui-switch input:checked:before {
+    border-color: #64bd63;
+    box-shadow: #64bd63 0 0 0 6.4px inset;
+    background-color: #64bd63;
+    transition: border .4s,box-shadow .4s,background-color 1.2s;
+    background-color: #64bd63
+}
+.ui-switch input:checked:after {
+    left: 16px
+}
+.ui-switch input:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 50%;
+    margin-top: -5px;
+    left: 0;
+    border-radius: 100%;
+    background-color: #fff;
+    box-shadow: 0 0.4px 1.2px rgba(0,0,0,.4);
+    transition: left .2s
 }
