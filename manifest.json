@@ -3,7 +3,7 @@
 
   "name": "百度推广屏蔽",
   "description": "移除百度相关页面上推广和广告.",
-  "version": "0.2",
+  "version": "0.3",
 
   "browser_action": {
     "default_icon": "icon.png",
@@ -19,6 +19,6 @@
     }
   ],
   "permissions": [
-    "tabs","storage"
+    "tabs", "storage"
   ]
 }

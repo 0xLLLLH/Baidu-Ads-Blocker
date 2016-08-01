@@ -1,10 +1,17 @@
 /**
  * Description :一个用于屏蔽百度推广和广告的插件。
- * @version 0.2
+ * @version 0.3
  * 
  * @author 0xLLLLH
  *
  */
+
+function hideElements(ads) {
+    for (i = 0;i < ads.length; i++) {
+        console.log(ads[i]);
+        ads[i].style.display = "none";
+    }
+}
 
 var blocker = {
     blockList: [
@@ -45,19 +52,21 @@ var blocker = {
         }
         for (i = 0; i < this.optionBlockList.length; i++) {
             var option = this.optionBlockList[i];
-            if (localStorage.getItem(option.optionName) != "false") {
-                for (var j =0; j < option.optionRule.length; j++) {
-                    ads = ads.concat(
-                        Array.prototype.slice.call( document.querySelectorAll(option.optionRule[j]) )
-                    );
-                }
-            }
+            chrome.storage.local.get([option.optionName],function(items){
+                    console.log("" + option.optionName + ":" + items[option.optionName]);
+                    var adsOp = [];
+                    if (items[option.optionName] == true) {
+                        for (var j =0; j < option.optionRule.length; j++) {
+                            adsOp = adsOp.concat(
+                                Array.prototype.slice.call( document.querySelectorAll(option.optionRule[j]) )
+                            );
+                        }
+                    }
+                    hideElements(adsOp);
+                });
         }
         
-        for (i = 0;i < ads.length; i++) {
-            console.log(ads[i]);
-            ads[i].style.display = "none";
-        }
+        hideElements(ads);
     },
 
     bindObserver: function () {
@@ -67,8 +76,8 @@ var blocker = {
         });
         this.observer.observe(document, {
             childList: true,
-            subtree:true,
-            characterData:true
+            subtree: true,
+            characterData: true
         });
     }
 };

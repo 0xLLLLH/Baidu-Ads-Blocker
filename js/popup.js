@@ -4,15 +4,17 @@ var vm = new Vue({
                 blockSidebar: true
             },
             created:function() {
-            	var str = localStorage.getItem("blockSidebar");
-            	if (str!=null)
-            		this.blockSidebar = str == "true" ? true : false;
-            	else
-            		localStorage.setItem("blockSidebar",this.blockSidebar);
+            	var _this = this;
+            	chrome.storage.local.get(["blockSidebar"],function(items){
+            		_this.blockSidebar = items.blockSidebar;
+            		console.log(items);
+            	});
             },
             watch:{
             	blockSidebar: function () {
-            		localStorage.setItem("blockSidebar",this.blockSidebar);
+            		chrome.storage.local.set({"blockSidebar":this.blockSidebar},function(){
+            			console.log("blockSidebar: "+this.blockSidebar);
+            		});
             	}
             }
         });
